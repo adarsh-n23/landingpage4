@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#08172b">
+
+<title>Official Telegram Community</title>
+<meta name="description" content="Join our official Telegram community for educational information and learning updates.">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: #08172b;
+    color: #fff;
+}
+
+.container {
+    width: 100%;
+    max-width: 430px;
+    padding: 32px 25px;
+    text-align: center;
+    border-radius: 22px;
+    background: linear-gradient(145deg,#142b48,#0b1a2d);
+    border: 1px solid #304661;
+    box-shadow: 0 15px 45px #0006;
+}
+
+.logo {
+    width: 82px;
+    height: 82px;
+    margin: 0 auto 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#d9b05f,#ffe5a5);
+    color: #10213a;
+    font-size: 29px;
+    font-weight: 900;
+}
+
+.label {
+    color: #e8c477;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: bold;
+    margin-bottom: 14px;
+}
+
+h1 {
+    font-size: 26px;
+    margin-bottom: 14px;
+}
+
+.description {
+    font-size: 14px;
+    color: #bdcada;
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+.section-title {
+    color: #e8c477;
+    font-size: 14px;
+    margin-bottom: 13px;
+}
+
+.features {
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+.features p {
+    color: #dce5ef;
+    font-size: 14px;
+    padding: 12px 5px;
+    border-bottom: 1px solid #30445a;
+}
+
+.features p:last-child {
+    border-bottom: 0;
+}
+
+.join-btn {
+    display: block;
+    width: 100%;
+    padding: 17px 10px;
+    border-radius: 12px;
+    background: linear-gradient(100deg,#dcb45f,#ffe4a0);
+    color: #10213a;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 800;
+    transition: opacity .2s;
+}
+
+.join-btn:hover {
+    opacity: .9;
+}
+
+.join-btn:focus-visible {
+    outline: 3px solid white;
+    outline-offset: 4px;
+}
+
+.disclaimer {
+    color: #9daec1;
+    font-size: 11px;
+    line-height: 1.8;
+    margin-top: 20px;
+}
+
+.footer {
+    margin-top: 20px;
+    color: #71869e;
+    font-size: 11px;
+}
+
+/* CHATBOT FLOATING BUTTON */
+
+.chat-toggle {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    width: 62px;
+    height: 62px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#d9b05f,#ffe5a5);
+    color: #10213a;
+    font-size: 27px;
+    cursor: pointer;
+    box-shadow: 0 5px 25px #0008;
+    z-index: 9999;
+}
+
+/* CHATBOT WINDOW */
+
+.chat-window {
+    position: fixed;
+    right: 22px;
+    bottom: 96px;
+    width: 350px;
+    max-width: calc(100vw - 30px);
+    height: 440px;
+    max-height: calc(100dvh - 115px);
+    background: #10243d;
+    border: 1px solid #405675;
+    border-radius: 18px;
+    overflow: hidden;
+    display: none;
+    flex-direction: column;
+    box-shadow: 0 15px 45px #0009;
+    z-index: 9998;
+}
+
+.chat-header {
+    padding: 16px;
+    background: #193653;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chat-header strong {
+    font-size: 14px;
+}
+
+.chat-status {
+    color: #83e2a3;
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+.close-chat {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.chat-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.message {
+    max-width: 88%;
+    padding: 11px 13px;
+    font-size: 13px;
+    line-height: 1.6;
+    border-radius: 12px;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.bot-message {
+    background: #1c3550;
+    color: #fff;
+    align-self: flex-start;
+}
+
+.user-message {
+    background: #e1bd70;
+    color: #10213a;
+    align-self: flex-end;
+}
+
+.chat-join {
+    display: block;
+    background: linear-gradient(100deg,#dcb45f,#ffe4a0);
+    color: #10213a;
+    padding: 12px;
+    border-radius: 9px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 9px;
+}
+
+.quick-questions {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+    padding: 0 12px 10px;
+}
+
+.quick-questions button {
+    border: 1px solid #536b84;
+    background: #1c3550;
+    color: white;
+    padding: 7px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.chat-input {
+    display: flex;
+    gap: 8px;
+    padding: 12px;
+    border-top: 1px solid #30445a;
+}
+
+.chat-input input {
+    flex: 1;
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid #405675;
+    border-radius: 9px;
+    outline: none;
+    background: #1c3550;
+    color: white;
+}
+
+.chat-input button {
+    width: 45px;
+    border: none;
+    border-radius: 9px;
+    background: #e1bd70;
+    color: #10213a;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+@media(max-width:480px) {
+    .chat-window {
+        right: 15px;
+        bottom: 92px;
+    }
+
+    .chat-toggle {
+        right: 18px;
+        bottom: 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<main class="container">
+
+    <div class="logo">TC</div>
+
+    <div class="label">
+        OFFICIAL TELEGRAM COMMUNITY
+    </div>
+
+    <h1>WELCOME TO OUR COMMUNITY</h1>
+
+    <p class="description">
+        Explore educational information, market learning
+        resources and regular informational updates
+        through our Telegram community.
+    </p>
+
+    <div class="section-title">
+        COMMUNITY CONTENT
+    </div>
+
+    <div class="features">
+        <p>✓ Educational Market Insights</p>
+        <p>✓ Technical Analysis Learning</p>
+        <p>✓ NIFTY & BANK NIFTY Concepts</p>
+        <p>✓ Market Information & Updates</p>
+        <p>✓ Risk Awareness & Education</p>
+    </div>
+
+    <a
+      class="join-btn"
+      href="https://telegram.me/+VOZb_G8ycoA1NDY1"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      ✈ JOIN OUR</a>
+    </a>
+
+    <p class="disclaimer">
+        Click above to visit our Telegram channel.
+        Joining is voluntary.
+
+        <br><br>
+
+        All information is for educational purposes only.
+        It is not financial advice. Trading involves
+        market risks.
+    </p>
+
+    <div class="footer">
+        © 2026 Official Telegram Community
+    </div>
+
+</main>
+
+<!-- FLOATING CHAT BUTTON -->
+
+<button class="chat-toggle"
+        id="chatToggle"
+        aria-label="Open Chat"
+        aria-expanded="false">
+    💬
+</button>
+
+<!-- CHAT WINDOW -->
+
+<div class="chat-window" id="chatWindow">
+
+    <div class="chat-header">
+        <div>
+            <strong>🤖 AI Community Assistant</strong>
+            <div class="chat-status">● Demo Assistant Online</div>
+        </div>
+
+        <button class="close-chat" id="closeChat"
+                aria-label="Close Chat">×</button>
+    </div>
+
+    <div class="chat-body" id="chatBody">
+
+        <div class="message bot-message">
+            नमस्ते! 👋 Welcome to our community.
+
+            मैं आपका Demo Assistant हूँ।
+            आप Market Learning और Telegram Community के बारे में पूछ सकते हैं।
+        </div>
+
+    </div>
+
+    <div class="quick-questions">
+        <button type="button" data-question="What is this community?">About Community</button>
+        <button type="button" data-question="What can I learn here?">Learning</button>
+        <button type="button" data-question="How can I join Telegram?">How to Join?</button>
+    </div>
+
+    <form class="chat-input" id="chatForm">
+        <input
+            type="text"
+            id="chatInput"
+            placeholder="Type your message..."
+            maxlength="300"
+            autocomplete="off"
+            required>
+
+        <button type="submit" aria-label="Send">➤</button>
+    </form>
+
+</div>
+
+<script>
+const chatToggle = document.getElementById("chatToggle");
+const chatWindow = document.getElementById("chatWindow");
+const closeChat = document.getElementById("closeChat");
+const chatBody = document.getElementById("chatBody");
+const chatForm = document.getElementById("chatForm");
+const chatInput = document.getElementById("chatInput");
+
+const telegramLink =
+"https://telegram.me/+VOZb_G8ycoA1NDY1";
+
+let replyCount = 0;
+
+chatToggle.addEventListener("click", function() {
+    const isOpen = chatWindow.style.display === "flex";
+
+    chatWindow.style.display = isOpen ? "none" : "flex";
+    chatToggle.setAttribute("aria-expanded", String(!isOpen));
+
+    if (!isOpen) chatInput.focus();
+});
+
+closeChat.addEventListener("click", function() {
+    chatWindow.style.display = "none";
+    chatToggle.setAttribute("aria-expanded", "false");
+});
+
+function addMessage(text, type) {
+    const message = document.createElement("div");
+    message.className = "message " + type;
+    message.textContent = text;
+
+    chatBody.appendChild(message);
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function addJoinButton() {
+    const message = document.createElement("div");
+    message.className = "message bot-message";
+
+    const text = document.createElement("div");
+    text.textContent =
+    "आप हमारी Educational Community को Telegram पर देख सकते हैं। अगर आप चाहें तो नीचे क्लिक करें।";
+
+    const link = document.createElement("a");
+    link.href = telegramLink;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.className = "chat-join";
+    link.textContent = "✈ JOIN TELEGRAM CHANNEL";
+
+    message.appendChild(text);
+    message.appendChild(link);
+
+    chatBody.appendChild(message);
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function getDemoReply(text) {
+    const q = text.toLowerCase();
+
+    if (q.includes("join") || q.includes("telegram") ||
+        q.includes("subscribe") || q.includes("चैनल")) {
+        return "आप हमारे Telegram Channel को नीचे दिए गए Join Button से खोल सकते हैं। Joining पूरी तरह आपकी इच्छा पर निर्भर है।";
+    }
+
+    if (q.includes("learn") || q.includes("learning") ||
+        q.includes("सीख") || q.includes("education")) {
+        return "हमारी Community में Educational Market Insights, Technical Analysis Concepts और Risk Awareness से संबंधित learning content उपलब्ध कराया जा सकता है।";
+    }
+
+    if (q.includes("nifty") || q.includes("bank nifty")) {
+        return "NIFTY और BANK NIFTY के Technical Concepts और Market Learning के बारे में शैक्षणिक जानकारी प्राप्त कर सकते हैं।";
+    }
+
+    if (q.includes("profit") || q.includes("return") ||
+        q.includes("कमाई") || q.includes("गारंटी")) {
+        return "Trading में Profit की कोई गारंटी नहीं होती। Market में Risk रहता है। हमारी Community का उद्देश्य Educational Information देना है।";
+    }
+
+    if (q.includes("hello") || q.includes("hi") ||
+        q.includes("नमस्ते")) {
+        return "नमस्ते! 😊 बताइए, मैं आपकी क्या मदद कर सकता हूँ?";
+    }
+
+    return "धन्यवाद! 😊 हमारी Community में Educational Market Insights और Learning Resources के बारे में जानकारी मिल सकती है। आप चाहें तो Telegram Channel भी देख सकते हैं।";
+}
+
+function sendMessage(text) {
+    text = text.trim();
+
+    if (!text) return;
+
+    addMessage(text, "user");
+
+    const reply = getDemoReply(text);
+
+    addMessage(reply, "bot-message");
+
+    replyCount++;
+
+    if (replyCount % 3 === 0) {
+        addJoinButton();
+    }
+}
+
+chatForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const text = chatInput.value.trim();
+
+    if (!text) return;
+
+    sendMessage(text);
+    chatInput.value = "";
+    chatInput.focus();
+});
+
+document.querySelectorAll(".quick-questions button")
+.forEach(function(button) {
+    button.addEventListener("click", function() {
+        sendMessage(button.dataset.question);
+    });
+});
+</script>
+
+</body>
+</html>
